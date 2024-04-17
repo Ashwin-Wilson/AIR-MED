@@ -28,7 +28,7 @@ docLoginBtn && docLoginBtn.addEventListener("click", () => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const user = result.user;
             // console.log(user);
-            window.location.href = "../doctorSide/docPage.html";
+            window.location.href = "doctorSide/docPage.html";
         }).catch((error) => {
             alert('error in login.\n try again')
             const errorCode = error.code;
@@ -45,7 +45,8 @@ patLoginBtn && patLoginBtn.addEventListener("click", () => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const user = result.user;
             console.log(user);
-            window.location.href = "../patientSide/info/surveyandmap.html";
+            window.location.href = "patientSide/info/surveyandmap.html";
+           // Web interface/patientSide/info/surveyandmap.html
         }).catch((error) => {
             alert('error in login.\n try again')
             const errorCode = error.code;
@@ -95,6 +96,8 @@ patientBtn && patientBtn.addEventListener('click', async (e) => {
     data.lattitude = lattitude.textContent
     console.log(data);
     await setDoc(doc(db, "patient", "pat1"), { data });
+    alert("Successfully submitted the response");
+    window.location.href = "../patientSide/info/surveyandmap.html";
 
 });
 

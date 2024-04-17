@@ -25,7 +25,7 @@ form {
 }
 .btn{
   margin-top: 2rem;
-  width: 15rem;
+  width: 10rem;
 }
 .container{
   color: white;
@@ -36,6 +36,7 @@ footer{
 .form-control-range{
   width: 16rem;
 }
-/* .patientInfo{
-  padding: ;
-} */
+.patientInfo{
+  background-color: #11111187;
+
+}
