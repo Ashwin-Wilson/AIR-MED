@@ -1,8 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js'
+import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js'
+import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js'
 
 
+//this web app is connected to the firebase project demo
 const firebaseConfig = {
     apiKey: "AIzaSyBzGLohu4cQVTdB9kBCGPFN3AVnT5eyeHI",
     authDomain: "fir-eba48.firebaseapp.com",
@@ -46,7 +48,7 @@ patLoginBtn && patLoginBtn.addEventListener("click", () => {
             const user = result.user;
             console.log(user);
             window.location.href = "patientSide/info/surveyandmap.html";
-           // Web interface/patientSide/info/surveyandmap.html
+            // Web interface/patientSide/info/surveyandmap.html
         }).catch((error) => {
             alert('error in login.\n try again')
             const errorCode = error.code;
@@ -94,10 +96,28 @@ patientBtn && patientBtn.addEventListener('click', async (e) => {
     data.Picture = user.photoURL;
     data.longitude = longitude.textContent
     data.lattitude = lattitude.textContent
+    data.date = new Date().toISOString().slice(0,10);
     console.log(data);
+
     await setDoc(doc(db, "patient", "pat1"), { data });
     alert("Successfully submitted the response");
-    window.location.href = "../patientSide/info/surveyandmap.html";
+    
+    await jQuery.ajax({
+        url: "https://script.google.com/macros/s/AKfycbyOfuaVk212jZMNP0r4duG5fb2S67deBiL0xuB0Aia_MHFOlOUEDMSmdSFhr9noCOqR/exec",
+        data: data,
+        method: "post",
+        success: function (response) {
+            alert("Form submitted to google sheets")
+            // window.location.reload()
+            //window.location.href="https://google.com"
+        },
+        error: function (err) {
+            alert("Something Error")
+
+        }
+    })
+    // window.location.href = "../patientSide/info/surveyandmap.html";
+    window.location.reload();
 
 });
 
